@@ -1,8 +1,9 @@
 let stableName = "Rito Stable"
 let welcomeMessage = `Welcome to ${stableName}! Here you can meet a variety of beautiful horses trained and born in the Rito mainlands, if you have your own horse and would like to take them out, please tell us and we will gladly help! Or you can leave a horse for a fair price depending on their size. Remember the key to a happy horse, is continual monthly payments!!`
 
+console.log(welcomeMessage);
 
-let horse1monthlyRent = 500
+let latePaymentMultiplier = 1.20;
 
 let horse1 = {
     name: "Ravenger",
@@ -15,11 +16,6 @@ let horse1 = {
     isTrained: true
 }
 
-let latePaymentMessage1 = `Buddy your payment is late. You forgot to pay for ${horse1.name}'s monthly rent. The amount owing is $${horse1.latePayment}.`
-
-
-let horse2monthlyRent = 400
-
 let horse2 = {
     name: "Rover",
     nickname: "Ro",
@@ -30,11 +26,6 @@ let horse2 = {
     breed: "Arabian",
     isTrained: true,
 }
-
-let latePaymentMessage2 = `Can't believe you don't care about him. You forgot to pay for ${horse2.name}'s monthly rent. The amount owing is $${horse2.latePayment}.`
-
-
-let horse3monthlyRent = 200
 
 let horse3 = {
     name: "Rune",
@@ -52,7 +43,7 @@ let horse3 = {
 let horse4 = {
     name: "Riana",
     nickname: "Riana",
-    favoriteTreat: "muffins",
+    favoriteTreat: "pumkin muffins",
     age: 5,
     monthlyRent: 300,
     location: false,
@@ -60,28 +51,58 @@ let horse4 = {
     isTrained: true,
 }
 
-let latePaymentMessage3 = `Looks like someone failed to remember their child. Again. You forgot to pay for ${horse3.name}'s monthly rent. The amount owing is $${horse3.latePayment}.`
+let horses = [horse1, horse2, horse3];
+horses.push(horse4);
 
-console.log(welcomeMessage)
+horse1.hungry = true;
+horse2.hungry = false;
+horse3.hungry = true;
+horse4.hungry = false;
 
-console.log(latePaymentMessage1)
-console.log(latePaymentMessage2)
-console.log(latePaymentMessage3)
+let totalStalls = 10;
 
-    
-    
-    // MAKING CHANGES TO THIS FILE FOR THIS NEW BRANCH
+// Create a function that logs how many stalls are available, given how many horses you have in your stable.
 
-// Logical Operators
-// && (AND)
-// || (OR)
-// == (IS THE SAME AS)
-// != (IS NOT THE SAME AS)
-// ! (NOT)
+function logAvailableStalls(numberOfHorses) {
+    let availableStalls = totalStalls - numberOfHorses;
 
-// FIX THE LATE PAYMENT MESSAGES, NICKNAME, STABLE STALLS, HUNGER
-// TOTAL STALLS, AVAILIBLE STALLS.
+    console.log(`Available stalls at ${stableName}: ${availableStalls}`);
+}
+
+// Invoke the function using the number of horses in the array.
+
+logAvailableStalls(horses.length);
+
+// Create a function that logs how much an individual horse will owe if rent is paid late. Invoke the function.
+
+function logLatePayment(horse) {
+    let latePayment = horse.monthlyRent * latePaymentMultiplier;
+
+    console.log(`${horse.name} owes $${latePayment} if rent is paid late.`);
+}
+
+logLatePayment(horse1);
+
+// Store a late-payment message that includes a horse's name and the amount owing.
+
+let latePaymentMessage1 = `Buddy, your payment is late. You forgot to pay for ${horse1.name}'s monthly rent. The amount owing is $${horse1.monthlyRent * latePaymentMultiplier}.`;
+
+// Display the welcome message and late-payment messages.
+
+console.log(latePaymentMessage1);
 
 
-// Create and invoke a function that returns (not logs) the nickname of a chosen horse. Log out
-// the return value outside of the function.
+// Create and invoke a function that returns the nickname of a chosen horse.
+// Log the return value outside of the function.
+
+function getHorseNickname(horse) {
+    return horse.nickname;
+}
+
+let chosenNickname = getHorseNickname(horse1);
+
+console.log(`The chosen horse's nickname is ${chosenNickname}.`);
+
+// Display the horses to check their information.
+
+console.log(horses);    
