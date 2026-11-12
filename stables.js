@@ -1,3 +1,4 @@
+
 let stableName = "Rito Stable"
 let welcomeMessage = `Welcome to ${stableName}! Here you can meet a variety of beautiful horses trained and born in the Rito mainlands, if you have your own horse and would like to take them out, please tell us and we will gladly help! Or you can leave a horse for a fair price depending on their size. Remember the key to a happy horse, is continual monthly payments!!`
 
@@ -11,7 +12,7 @@ let horse1 = {
     favoriteTreat: "apples",
     age: 23,
     monthlyRent: 500,
-    location: true, // true = inside, false = outside
+    isHorseInside: true,
     breed: "Mustang",
     isTrained: true
 }
@@ -22,7 +23,7 @@ let horse2 = {
     favoriteTreat: "almonds",
     age: 17,
     monthlyRent: 400,
-    location: false,
+    isHorseInside: false,
     breed: "Arabian",
     isTrained: true,
 }
@@ -33,7 +34,7 @@ let horse3 = {
     favoriteTreat: "carrots",
     age: 7,
     monthlyRent: 200,
-    location: true,
+    isHorseInside: true,
     breed: "Quarter Horse",
     isTrained: false,
 }
@@ -46,7 +47,7 @@ let horse4 = {
     favoriteTreat: "pumkin muffins",
     age: 5,
     monthlyRent: 300,
-    location: false,
+    isHorseInside: false,
     breed: "Appaloosa",
     isTrained: true,
 }
@@ -63,25 +64,23 @@ let totalStalls = 10;
 
 // Create a function that logs how many stalls are available, given how many horses you have in your stable.
 
-function logAvailableStalls(numberOfHorses) {
+function logAvailableStalls(totalStalls, numberOfHorses) {
     let availableStalls = totalStalls - numberOfHorses;
 
     console.log(`Available stalls at ${stableName}: ${availableStalls}`);
 }
 
-// Invoke the function using the number of horses in the array.
-
-logAvailableStalls(horses.length);
+logAvailableStalls(totalStalls, horses.length);
 
 // Create a function that logs how much an individual horse will owe if rent is paid late. Invoke the function.
 
-function logLatePayment(horse) {
+function logLatePayment(horse, latePaymentMultiplier) {
     let latePayment = horse.monthlyRent * latePaymentMultiplier;
 
     console.log(`${horse.name} owes $${latePayment} if rent is paid late.`);
 }
 
-logLatePayment(horse1);
+logLatePayment(horse1, latePaymentMultiplier);
 
 // Store a late-payment message that includes a horse's name and the amount owing.
 
@@ -91,18 +90,86 @@ let latePaymentMessage1 = `Buddy, your payment is late. You forgot to pay for ${
 
 console.log(latePaymentMessage1);
 
-
-// Create and invoke a function that returns the nickname of a chosen horse.
-// Log the return value outside of the function.
+// Create and invoke a function that logs the nickname of a chosen horse.
 
 function getHorseNickname(horse) {
-    return horse.nickname;
+    console.log(`The chosen horse's nickname is ${horse.nickname}.`);
 }
 
-let chosenNickname = getHorseNickname(horse1);
+getHorseNickname(horse1);
 
-console.log(`The chosen horse's nickname is ${chosenNickname}.`);
+// Search for a horse that likes a particular treat.
+
+function findHorseWithTreat(treatToFind) {
+    for (const horse of horses) {
+        if (horse.favoriteTreat === treatToFind) {
+            console.log(`${horse.name} likes ${treatToFind}!`);
+            return;
+        }
+
+        console.log(`${horse.name} doesn't like ${treatToFind}. Checking the next horse.`);
+    }
+}
+
+findHorseWithTreat("carrots");
+
+// Create a function that checks a horse's training.
+
+function checkHorseTraining(horse) {
+    if (horse.isTrained === true) {
+        console.log(`${horse.name} is trained and ready to ride.`);
+    }
+
+    if (horse.isTrained === false) {
+        console.log(`${horse.name} still needs training.`);
+    }
+}
+
+for (const horse of horses) {
+    checkHorseTraining(horse);
+}
+
+// Morning: Move selected horses outside.
+
+function moveHorsesOutside(horsesToMove, isGettingDark) {
+    for (const horse of horsesToMove) {
+        if (isGettingDark === false) {
+            if (horse.isHorseInside === true) {
+                horse.isHorseInside = false;
+                console.log(`${horse.name} has been moved outside into the sun.`);
+            }
+        }
+
+        if (isGettingDark === true) {
+            if (horse.isHorseInside === false) {
+                horse.isHorseInside = true;
+                console.log(`${horse.name} has been called inside for the night.`);
+            }
+        }
+    }
+}
+
+moveHorsesOutside([horse1, horse3], false);
+
+// Feeding: Bring outside horses inside and feed them their favorite treats.
+
+function feedHorses(horsesToFeed) {
+    for (const horse of horsesToFeed) {
+        if (horse.isHorseInside === false) {
+            horse.isHorseInside = true;
+            console.log(`${horse.name} has been called inside to eat.`);
+        }
+
+        console.log(`${horse.name} has been fed ${horse.favoriteTreat}.`);
+    }
+}
+
+feedHorses(horses);
+
+// Bedtime: Call horses inside if it is getting dark.
+
+moveHorsesOutside(horses, true);
 
 // Display the horses to check their information.
 
-console.log(horses);    
+console.log(horses);
